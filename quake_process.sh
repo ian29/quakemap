@@ -29,13 +29,11 @@ usage: $0 [OPTION]
 -c column       specify which column you want to make a map of
 -t table       	name the table 
 -o FILE         Path of the output file. Defaults to the name of the postgres table. 
--h -?	 		Display this help screen
+-h				Display this help screen
 
 Example:
-    $0 -c psa03 -t costa_rica -o cosat-rica-pga.tif
+    $0 -c psa03 -t costa_rica grid.xyz costa-rica-pga.tif
 
-Export example:
-    $0 -e -f 201101 -t 201112 -o 2011_medians.tif
 EOF
 }
 
@@ -49,6 +47,8 @@ pg_setup() {
 
 import_xyz() {
     echo "Importing $1..."
+    tempm=$(mktemp)
+	sed '1d' $inputfile > $tempm
     $pgcmd -c "copy $t (x,y,) from stdin with delimiter ' ' csv" < $1
 }
 
@@ -75,7 +75,7 @@ write_ramp()
 
 export() {
     if [ -z $outfile ]; then
-        outfile="${table}.tif"
+        outfile="${table}-${column}.tif"
     fi
     tempfile=$(mktemp)
 
