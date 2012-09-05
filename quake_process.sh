@@ -1,7 +1,16 @@
 #!/bin/bash
 set -e -u
 
-
+# GOALS:
+# this script attempts to do the following, making it easier to make fast maps 
+# 	out of the USGS shakemap product: http://earthquake.usgs.gov/research/shakemap/
+#
+# 1. eat an .xyz file of earthquake data from USGS
+# 2. clean + import that file to a postgres table
+# 3. run some basic sql to get min,max and avg out of a user-specified column 
+# 4. use those values in a color ramp
+# 5. export to geotiff, and then recolor that tif with the color ramp
+#
 # TODO: 
 # - correctly assign variable values for pg_values
 # - gdaldem color-relief before export
