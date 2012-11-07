@@ -49,7 +49,7 @@ import_xyz() {
     echo "Importing $1..."
     tempm=$(mktemp)
     sed '1d' $inputfile > $tempm
-    $pgcmd -c "copy $t (x,y,) from stdin with delimiter ' ' csv" < $1
+    $pgcmd -c "copy guate (x,y,pga, pgv, mmi, psa03, psa10, psa30) from stdin with delimiter ' ' csv" < $1
     rm $tempm
 }
 
@@ -92,7 +92,7 @@ export() {
 }
 
 mapify() {
-	# Colorize
+	# Colorize - but is this the right way to invoke the ramp.txt file?
 	gdaldem color-relief ${table}-ramp.txt $temp2 $temp3 
 	
 	# Reproject
